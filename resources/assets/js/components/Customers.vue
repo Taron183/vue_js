@@ -7,23 +7,22 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for = "customer in customers">
-                    <td>{{customer.name}}</td>
-                    <td>{{customer.email}}</td>
-                </tr>
+
+                <customer v-for="customer in customers"f v-bind:customer="customer"> </customer>
             </tbody>
     </table>
 </template>
 
 <script>
-
+    import customer from "./Customer.vue";
     export default {
-
         data() {
             return {
                 customers: [],
             }
         },
+
+        components: {customer},
 
 
 
