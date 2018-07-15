@@ -91,6 +91,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Customer::destroy($id);
+        return response()->json(['message' => 'Customer delete successfully']);
     }
 }

@@ -44969,6 +44969,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45013,6 +45014,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response.data);
             }, function (response) {
                 _this2.errors = response.data.errors;
+            });
+        },
+        deleteCustomer: function deleteCustomer(customer) {
+            var _this3 = this;
+
+            this.$http.delete("/customer/" + customer.id).then(function (response) {
+                var index = _this3.customers.indexOf(customer);
+                _this3.customers.splice(index, 1);
+                console.log(response.data);
             });
         }
     }
@@ -45125,7 +45135,10 @@ var render = function() {
       _c(
         "tbody",
         _vm._l(_vm.customers, function(customer) {
-          return _c("customer", { attrs: { f: "", customer: customer } })
+          return _c("customer", {
+            attrs: { f: "", customer: customer },
+            on: { "delete-customer": _vm.deleteCustomer }
+          })
         })
       )
     ])
@@ -45151,7 +45164,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Email")])
+        _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
     ])
   }
@@ -45241,6 +45256,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['customer']
@@ -45257,7 +45275,23 @@ var render = function() {
   return _c("tr", [
     _c("td", [_vm._v(_vm._s(_vm.customer.name))]),
     _vm._v(" "),
-    _c("td", [_vm._v(_vm._s(_vm.customer.email))])
+    _c("td", [_vm._v(_vm._s(_vm.customer.email))]),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger btn-xs",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.$emit("delete-customer", _vm.customer)
+            }
+          }
+        },
+        [_vm._v("Delete")]
+      )
+    ])
   ])
 }
 var staticRenderFns = []

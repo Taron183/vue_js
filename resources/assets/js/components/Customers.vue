@@ -24,10 +24,11 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            <customer v-for="customer in customers"f v-bind:customer="customer"> </customer>
+            <customer v-for="customer in customers"f v-bind:customer="customer" v-on:delete-customer = "deleteCustomer"> </customer>
             </tbody>
         </table>
     </div>
@@ -76,6 +77,14 @@
                     console.log(response.data)
                 }, response =>{
                     this.errors = response.data.errors;
+                });
+            },
+
+            deleteCustomer(customer){
+                this.$http.delete("/customer/" + customer.id).then(response =>{
+                    let index = this.customers.indexOf(customer)
+                    this.customers.splice(index,1);
+                    console.log(response.data)
                 });
             }
         }
