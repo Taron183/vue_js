@@ -44947,12 +44947,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            customers: []
+            customers: [],
+            errors: [],
+            customer: {
+                name: '',
+                email: ''
+            }
         };
     },
 
@@ -44971,6 +44998,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$http.get('customer').then(function (response) {
                 _this.customers = response.data.customers;
             });
+        },
+        createCustomer: function createCustomer() {
+            var _this2 = this;
+
+            this.$http.post("/customer/", this.customer).then(function (response) {
+                _this2.customers.push(response.data.customer);
+                _this2.customer = { name: '', email: '' };
+
+                if (_this2.errors) {
+                    _this2.errors = [];
+                }
+
+                console.log(response.data);
+            }, function (response) {
+                _this2.errors = response.data.errors;
+            });
         }
     }
 });
@@ -44983,18 +45026,123 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table table-bordered" }, [
-    _vm._m(0),
-    _vm._v(" "),
+  return _c("div", [
     _c(
-      "tbody",
-      _vm._l(_vm.customers, function(customer) {
-        return _c("customer", { attrs: { f: "", customer: customer } })
-      })
-    )
+      "form",
+      {
+        attrs: { method: "post" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.createCustomer($event)
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { class: { "form-group": true, "has-error": _vm.errors.name } },
+          [
+            _c("label", [_vm._v("Name")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.customer.name,
+                  expression: "customer.name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.customer.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.customer, "name", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.name, function(error) {
+              return _c("span", {
+                staticClass: "help-block",
+                domProps: { textContent: _vm._s(error) }
+              })
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { class: { "form-group": true, "has-error": _vm.errors.email } },
+          [
+            _c("label", [_vm._v("Email")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.customer.email,
+                  expression: "customer.email"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "email" },
+              domProps: { value: _vm.customer.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.customer, "email", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.email, function(error) {
+              return _c("span", {
+                staticClass: "help-block",
+                domProps: { textContent: _vm._s(error) }
+              })
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-bordered" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.customers, function(customer) {
+          return _c("customer", { attrs: { f: "", customer: customer } })
+        })
+      )
+    ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("input", {
+        staticClass: "btn btn-primary",
+        attrs: { type: "submit", value: "Create New Customer" }
+      })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

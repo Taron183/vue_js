@@ -25,7 +25,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,7 +36,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this>$this->validate($request,[
+            'name' => 'required',
+            'email' => 'required|email',
+        ]);
+        $cusomer = Customer::create($request->all());
+        return response()->json(
+            [
+                'customer' => $cusomer,
+                'message' => 'Customer created successfully'
+            ]
+        );
     }
 
     /**
