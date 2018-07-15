@@ -80,7 +80,9 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer->update($request->all());
+        return response()->json(['message' => 'Customer update successfully']);
     }
 
     /**

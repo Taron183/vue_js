@@ -28,7 +28,10 @@
             </tr>
             </thead>
             <tbody>
-            <customer v-for="customer in customers"f v-bind:customer="customer" v-on:delete-customer = "deleteCustomer"> </customer>
+            <customer v-for="customer in customers"f v-bind:customer="customer" v-on:delete-customer = "deleteCustomer"
+            v-on:update-customer="fetchCustomer">
+
+            </customer>
             </tbody>
         </table>
     </div>
